@@ -63,3 +63,9 @@ If you don't have Node.js installed, download it from [nodejs.org](https://nodej
 - The CLI will ask you which package manager to use: **npm** or **yarn**  
 - Navigate to your project folder with:  
   `cd folder-name`
+  
+### Setting up the Project
+
+- Add a `.env` file for environment variables. Here, I set the port to `3000`.
+- Modify `main.ts` to display a message with the server URL:  
+  `"Application is running on: http://localhost:3000"`
