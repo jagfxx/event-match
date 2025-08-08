@@ -35,3 +35,31 @@ Event and networking management platform. Allows users to create and discover ev
 - **POST**  /events/:id/rsvp -> Confirm attendance
 - **DELETE**  /events/:id/rsvp -> Cancel attendance 
 - **GET**  /events/:id/attendees -> Return attendees
+
+## 2. Backend: NestJS + Prisma + PostgreSQL
+
+### Make sure you have Node.js installed
+
+- Check Node.js version: `node -v`  
+- Check npm version: `npm -v`  
+
+If you don't have Node.js installed, download it from [nodejs.org](https://nodejs.org/en).
+
+---
+
+### Install NestJS CLI
+
+- Install globally: `npm i -g @nestjs/cli`  
+- Verify installation: `nest --version`  
+
+If you don't have Node.js installed, download it from [nodejs.org](https://nodejs.org/en).
+
+---
+
+### Create Project
+
+- Create a new project with:  
+  `nest new EventMatch`  
+- The CLI will ask you which package manager to use: **npm** or **yarn**  
+- Navigate to your project folder with:  
+  `cd folder-name`
