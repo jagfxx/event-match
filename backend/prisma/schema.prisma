@@ -1,0 +1,101 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// table for user roles
+model role {
+  id_role     String   @id @default(uuid()) // unique identifier
+  role        String   // role name (e.g., admin, user)
+  description String  // role description
+  users       users[]  // relation with users table
+}
+
+// table for users
+model users {
+  id         String    @id @default(uuid()) // unique identifier
+  name       String    // user full name
+  id_role    String    // foreign key to role table
+  email      String    @unique // unique email
+  password   String    // hashed password
+  createdAt  DateTime  @default(now()) // creation timestamp
+  updatedAt  DateTime  @updatedAt // updated timestamp
+
+  // relations
+  role       role?     @relation(fields: [id_role], references: [id_role])
+  user_tags  user_tag[]
+  events     event[]   @relation("UserEvents")
+  rsvps      rsvp[]
+}
+
+// table for tags
+model tags {
+  id_tag     String       @id @default(uuid()) // unique identifier
+  tag        String       // tag name
+  user_tags  user_tag[]   // relation with user_tag
+  event_tags event_tags[] // relation with event_tags
+}
+
+// pivot table for users and tags
+model user_tag {
+  id_user String // foreign key to users
+  id_tag  String // foreign key to tags
+
+  // relations
+  user users @relation(fields: [id_user], references: [id])
+  tag  tags  @relation(fields: [id_tag], references: [id_tag])
+
+  @@id([id_user, id_tag]) // composite primary key
+}
+
+// table for events
+model event {
+  id_event    String      @id @default(uuid()) // unique identifier
+  title       String      // event title
+  description String      // event description
+  location    String      // event location
+  date        DateTime    // event date and time
+  id_creator  String      // foreign key to user who created it
+  createdAt   DateTime    @default(now()) // creation timestamp
+  updatedAt   DateTime    @updatedAt // updated timestamp
+
+  // relations
+  creator     users?      @relation("UserEvents", fields: [id_creator], references: [id])
+  event_tags  event_tags[]
+  rsvps       rsvp[]
+}
+
+// pivot table for events and tags
+model event_tags {
+  id_event String // foreign key to events
+  id_tag   String // foreign key to tags
+
+  // relations
+  event event @relation(fields: [id_event], references: [id_event])
+  tag   tags  @relation(fields: [id_tag], references: [id_tag])
+
+  @@id([id_event, id_tag]) // composite primary key
+}
+
+// table for rsvp (event attendance)
+model rsvp {
+  id_rsvp  String   @id @default(uuid()) // unique identifier
+  id_user  String   // foreign key to user
+  id_event String   // foreign key to event
+  status   String   // status of attendance (e.g., confirmed, canceled)
+
+  // relations
+  user  users? @relation(fields: [id_user], references: [id])
+  event event? @relation(fields: [id_event], references: [id_event])
+}
