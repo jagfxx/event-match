@@ -89,3 +89,64 @@ To run the backend application properly, the following environment variables nee
 - Make sure to keep `JWT_SECRET` secure and never commit it to source control.
 - Use a `.env.example` file to share variable names without exposing sensitive data.
 - Adjust `DATABASE_URL` according to your local or production PostgreSQL setup.
+
+## Setting up Database: PostgreSQL and Prisma
+
+### 1. Make `psql` Available in Terminal (Windows)
+If `psql` is not recognized as a command, add PostgreSQL's `bin` folder to your PATH:
+
+1. Find where PostgreSQL is installed. By default:
+   ```
+   C:\Program Files\PostgreSQL\<version>\bin
+   ```
+   Example: `C:\Program Files\PostgreSQL\16\bin`
+
+2. Go to **System Properties** → **Advanced** → **Environment Variables**.
+
+3. In **System Variables**, edit `Path` and add the `bin` folder path.
+
+4. Open a new terminal and test:
+   ```bash
+   psql -U postgres
+   ```
+
+---
+
+### 2. Access the PostgreSQL Console
+```bash
+psql -U postgres
+```
+*(It may ask for the password you set during installation.)*
+
+---
+
+### 3. Create a New Database
+Inside the PostgreSQL console:
+```sql
+CREATE DATABASE name_bd;
+```
+
+---
+
+### 4. Verify the Database
+```sql
+\l
+```
+
+---
+
+### 5. (Optional) Connect to the Database
+```sql
+\c name_bd
+```
+
+---
+
+### 6. (Optional) Create a New User
+```sql
+CREATE USER my_user WITH PASSWORD 'my_password';
+GRANT ALL PRIVILEGES ON DATABASE name_bd TO my_user;
+```
+
+---
+
