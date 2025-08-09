@@ -17,6 +17,14 @@ build/
 .env.local
 .env.*.local
 
+# Prisma
+prisma/dev.db
+prisma/test.db
+prisma/migrations/
+# Uncomment below if you use SQLite in dev
+# *.db
+# *.db-journal
+
 # IDEs and editors
 .vscode/
 .idea/

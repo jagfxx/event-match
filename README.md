@@ -150,3 +150,187 @@ GRANT ALL PRIVILEGES ON DATABASE name_bd TO my_user;
 
 ---
 
+# Setting up Prisma with PostgreSQL
+
+## 1. Install Prisma and Prisma Client
+Install Prisma CLI (development dependency) and Prisma Client (runtime dependency):
+
+```bash
+npm install --save-dev prisma
+npm install @prisma/client
+```
+
+---
+
+## 2. Initialize Prisma in Your Project
+```bash
+npx prisma init
+```
+This will create:
+```
+prisma/
+  schema.prisma
+.env
+```
+
+---
+
+## 3. Configure Database Connection
+In your `.env` file, set the database connection string:
+```env
+DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/DATABASE_NAME?schema=public"
+```
+
+Replace:
+- `USER` → your PostgreSQL username
+- `PASSWORD` → your PostgreSQL password
+- `DATABASE_NAME` → the name of your database
+
+---
+
+## 4. Edit `schema.prisma` with Your Models
+Open `prisma/schema.prisma` and replace its content with:
+
+```prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model role {
+  id_role    String   @id @default(uuid())
+  role       String
+  descripcion String?
+  users      users[]
+
+  @@map("role")
+}
+
+model users {
+  id         String    @id @default(uuid())
+  name       String
+  id_role    String?
+  email      String    @unique
+  password   String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  role       role?     @relation(fields: [id_role], references: [id_role])
+  user_tags  user_tag[]
+  events     event[]   @relation("UserEvents")
+  rsvps      rsvp[]
+
+  @@map("users")
+}
+
+model tags {
+  id_tag     String     @id @default(uuid())
+  tag        String
+  user_tags  user_tag[]
+  event_tags event_tags[]
+
+  @@map("tags")
+}
+
+model user_tag {
+  id_user String
+  id_tag  String
+
+  user users @relation(fields: [id_user], references: [id])
+  tag  tags  @relation(fields: [id_tag], references: [id_tag])
+
+  @@id([id_user, id_tag])
+  @@map("user_tag")
+}
+
+model event {
+  id_event   String      @id @default(uuid())
+  title      String
+  description String?
+  location   String?
+  date       DateTime
+  id_creator String?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  creator    users?      @relation("UserEvents", fields: [id_creator], references: [id])
+  event_tags event_tags[]
+  rsvps      rsvp[]
+
+  @@map("event")
+}
+
+model event_tags {
+  id_event String
+  id_tag   String
+
+  event event @relation(fields: [id_event], references: [id_event])
+  tag   tags  @relation(fields: [id_tag], references: [id_tag])
+
+  @@id([id_event, id_tag])
+  @@map("event_tags")
+}
+
+model rsvp {
+  id_rsvp  String   @id @default(uuid())
+  id_user  String?
+  id_event String?
+  status   String
+
+  user  users? @relation(fields: [id_user], references: [id])
+  event event? @relation(fields: [id_event], references: [id_event])
+
+  @@map("rsvp")
+}
+```
+
+---
+
+## 5. Create Tables in the Database
+Since your database is empty, run:
+```bash
+npx prisma migrate dev --name init
+```
+This will:
+- Create all the tables in PostgreSQL based on your schema.
+- Generate Prisma Client.
+
+---
+
+## 6. Verify Tables
+To check your tables in PostgreSQL, open `psql`:
+```bash
+psql -U postgres -d DATABASE_NAME
+```
+Then:
+```sql
+\dt
+```
+
+---
+
+## 7. Using Prisma Client in Your Code
+Example usage:
+```ts
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+async function main() {
+  const roles = await prisma.role.findMany();
+  console.log(roles);
+}
+
+main()
+  .catch(console.error)
+  .finally(() => prisma.$disconnect());
+```
+
+---
+
+
+
