@@ -102,7 +102,7 @@ function Login() {
             if (response.ok) {
                 console.log('Login successful');
                 localStorage.setItem('token', data.token);
-                window.location.href = '/dashboard';
+                window.location.href = '/';
             } else {
                 if (response.status === 401) {
                     setErrorMsg('Credenciales invalidas', data.message || data.error);

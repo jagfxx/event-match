@@ -1,6 +1,6 @@
 import "./globals.css";
 import { Poppins } from "next/font/google";
-
+import Providers from "./providers";
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"], // los pesos que quieras usar
@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${poppins.variable} antialiased`}
       >
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

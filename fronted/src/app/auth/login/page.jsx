@@ -3,11 +3,13 @@
 import Link from "next/link";
 import TypewriterClient from '../../../components/TypewriterClient';
 import { useState } from "react";
+import { useAuth } from "../../../app/auth/AuthProvider";
 export default function Login() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
+    const { signIn } = useAuth();
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrorMsg("");
@@ -24,8 +26,8 @@ export default function Login() {
             console.log(data);
             if (response.ok) {
                 console.log('Login successful');
-                localStorage.setItem('token', data.token);
-                window.location.href = '/dashboard';
+                signIn(data.token, { name: data.name, email: data.email }); // ✅ Guarda todo
+                window.location.href = '/';
             } else {
                 if(response.status === 401){
                     setErrorMsg('Credenciales invalidas', data.message || data.error);
