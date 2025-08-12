@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Julian/Desktop/projects/event-match/fronted/src/components/TypewriterClient.jsx"],"sourcesContent":["\"use client\"; // marca este archivo como cliente\r\n\r\nimport Typewriter from \"typewriter-effect\";\r\n\r\nexport default function TypewriterClient() {\r\n  \r\n  return (\r\n    <span className=\"flex text-4xl font-bold\">\r\n      E\r\n      <Typewriter\r\n        options={{\r\n          strings: [\"vent\"],\r\n          autoStart: true,\r\n          loop: true,\r\n        }}\r\n      />\r\n      M\r\n      <Typewriter\r\n        options={{\r\n          strings: [\"atch\"],\r\n          autoStart: true,\r\n          loop: true,\r\n        }}\r\n      />\r\n    </span>\r\n  );\r\n}\r\n"],"names":[],"mappings":";;;;AAEA;AAFA,cAAc,kCAAkC;;;AAIjC,SAAS;IAEtB,qBACE,6LAAC;QAAK,WAAU;;YAA0B;0BAExC,6LAAC,wJAAA,CAAA,UAAU;gBACT,SAAS;oBACP,SAAS;wBAAC;qBAAO;oBACjB,WAAW;oBACX,MAAM;gBACR;;;;;;YACA;0BAEF,6LAAC,wJAAA,CAAA,UAAU;gBACT,SAAS;oBACP,SAAS;wBAAC;qBAAO;oBACjB,WAAW;oBACX,MAAM;gBACR;;;;;;;;;;;;AAIR;KAtBwB","debugId":null}}]
+}

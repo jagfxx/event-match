@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 61, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Julian/Desktop/projects/event-match/fronted/src/components/TypewriterClient.jsx"],"sourcesContent":["\"use client\"; // marca este archivo como cliente\r\n\r\nimport { Span } from \"next/dist/trace\";\r\nimport Typewriter from \"typewriter-effect\";\r\n\r\nexport default function TypewriterClient() {\r\n  return (\r\n    Span\r\n  );\r\n}\r\n"],"names":[],"mappings":";;;AAEA;AACA;AAHA,cAAc,kCAAkC;;;AAKjC,SAAS;IACtB,OACE,8IAAA,CAAA,OAAI;AAER","debugId":null}}]
+}
