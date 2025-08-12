@@ -331,6 +331,63 @@ main()
 ```
 
 ---
+---
 
+## 8. Installing bcryptjs and Creating a Seed Script
 
+### Install bcryptjs
+To install `bcryptjs` for password hashing, run:
+```bash
+npm install bcryptjs
+```
+---
+### Create `seed.ts` and update `package.json`
 
+1. Create the file `prisma/seed.ts` with the following content:
+
+```typescript
+import { PrismaClient } from '@prisma/client';
+import { hash } from 'bcryptjs';
+
+const prisma = new PrismaClient();
+
+async function main() {
+  // Create roles
+  const adminRole = await prisma.role.create({
+    data: { role: 'ADMIN', descripcion: 'System administrator' },
+  });
+
+  const userRole = await prisma.role.create({
+    data: { role: 'USER', descripcion: 'Standard user' },
+  });
+
+  // Create admin user with encrypted password
+  const passwordHash = await hash('123456', 10);
+
+  await prisma.users.create({
+    data: {
+      email: 'admin@example.com',
+      password: passwordHash,
+      roleId: adminRole.id_role, // Adjust according to your model
+    },
+  });
+
+  console.log('✅ Seed executed successfully');
+}
+
+main()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
+```
+
+in your package.json add the script to run the seed 
+``` bash
+"scripts": {
+  "seed": "ts-node prisma/seed.ts"
+}
+```
