@@ -14,7 +14,7 @@ export default function Home() {
        </div> 
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <p>© 2025 Event Match. All rights reserved.</p>
+        <p>© 2025 EventMatch. All rights reserved.</p>
       </footer>
     </div>
   );

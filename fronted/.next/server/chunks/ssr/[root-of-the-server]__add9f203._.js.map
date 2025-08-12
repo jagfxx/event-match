@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 6, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
+    {"offset": {"line": 18, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/Julian/Desktop/projects/event-match/fronted/src/app/dashboard/page.jsx"],"sourcesContent":["export default function Dashboard() {\r\n    return (\r\n        <section className=\"w-screen h-screen flex flex-col gap-[20px] w-full justify-center items-center\">\r\n            <h1>Dashboard</h1>\r\n        </section>\r\n    );\r\n}"],"names":[],"mappings":";;;;;AAAe,SAAS;IACpB,qBACI,8OAAC;QAAQ,WAAU;kBACf,cAAA,8OAAC;sBAAG;;;;;;;;;;;AAGhB","debugId":null}}]
+}
